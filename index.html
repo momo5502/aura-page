@@ -110,6 +110,13 @@
         const nextIndex = (newIndex + 1) % videos.length;
         screen.src = videos[newIndex];
 
+        const origRatio = screen.style.aspectRatio;
+        screen.style.aspectRatio = "16 / 9.3";
+
+        setTimeout(() => {
+          screen.style.aspectRatio = origRatio;
+        }, 50);
+
         preloadVideo(videos[nextIndex]);
       }
       
