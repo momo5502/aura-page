@@ -10,6 +10,7 @@
     <link rel="icon" type="image/x-icon" href="./favicon.ico">
 
     <script src="https://cdn.tailwindcss.com"></script>
+
   </head>
 
   <body class="h-full tracking-normal text-sky-500 bg-cover bg-fixed" style="background-image: url('header.png'); background-position-x: center;">
@@ -21,20 +22,20 @@
             <span class="bg-clip-text text-transparent bg-gradient-to-r from-sky-500 to-blue-600">Aura</span> Wallpaper
           </h1>
           <p class="leading-normal text-base md:text-2xl mb-8 text-center md:text-left">
-           Live wallpapers for your Windows Desktop & Lockscreen
+           Live wallpapers for your Windows desktop & lockscreen
           </p>
 
           <iframe src="https://store.steampowered.com/widget/2726120" class="w-full" height="190" frameborder="0"></iframe>
         </div>
 
         <div class="p-4 w-full flex-1 overflow-hidden">
-          <video id="video" style="
+          <video id="screen" style="
           margin:auto;
           width: 100%;
           border: 12px solid #1a1a1a;
           border-radius: 22px;
           box-shadow: 0 0 8px #1a1a1a;
-          " loop autoplay muted src="https://cdn.akamai.steamstatic.com/steam/apps/257008189/movie480_vp9.webm"></video>
+          " autoplay muted src="https://cdn.akamai.steamstatic.com/steam/apps/257008189/movie480_vp9.webm"></video>
           <div class="case" style="
           width: 7%;
           height: 40px;
@@ -59,5 +60,62 @@
       </div>
 
     </div>
+
+    <script>
+      const shuffleArray = array => {
+        for (let i = array.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          const temp = array[i];
+          array[i] = array[j];
+          array[j] = temp;
+        }
+      }
+
+      const videos = [
+        "https://cdn.akamai.steamstatic.com/steam/apps/257008189/movie480_vp9.webm",
+        "https://cdn.akamai.steamstatic.com/steam/apps/257008187/movie480_vp9.webm",
+        "https://cdn.akamai.steamstatic.com/steam/apps/257008191/movie480_vp9.webm",
+        "https://cdn.akamai.steamstatic.com/steam/apps/257008190/movie480_vp9.webm",
+        "https://cdn.akamai.steamstatic.com/steam/apps/257008192/movie480_vp9.webm",
+      ];
+
+      shuffleArray(videos);
+
+      const screen = document.getElementById("screen");
+
+      async function preloadVideo(src) {
+        var newVideo = document.getElementById("preload-container");
+        if (!newVideo) {
+          newVideo = document.createElement("video");
+          document.body.appendChild(newVideo);
+        }
+
+        newVideo.muted = true;
+        newVideo.autoplay = true;
+        newVideo.style.position = "fixed";
+        newVideo.style.top = "101%";
+        newVideo.style.width = "1px";
+        newVideo.style.height = "1px";
+        newVideo.style.opacity = "0.01";
+        newVideo.style.pointerEvents = "none";
+        newVideo.style.userSelect = "none";
+
+        newVideo.src = src;
+      }
+
+      function playNextVideo() {
+        const currentIndex = videos.indexOf(screen.src);
+        const newIndex = (currentIndex + 1) % videos.length;
+        const nextIndex = (newIndex + 1) % videos.length;
+        screen.src = videos[newIndex];
+
+        preloadVideo(videos[nextIndex]);
+      }
+      
+      screen.onended = playNextVideo;
+      screen.src = videos[0];
+
+      playNextVideo();
+    </script>
   </body>
 </html>
