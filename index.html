@@ -1,129 +1,148 @@
 <!DOCTYPE html>
 <html lang="en" class="h-full">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Aura - Animated Windows Wallpapers</title>
-    <meta name="description" content="" />
-    <meta name="keywords" content="" />
-    <link rel="icon" type="image/x-icon" href="./favicon.ico">
 
-    <script src="https://cdn.tailwindcss.com"></script>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Aura - Animated Windows Wallpapers</title>
+  <meta name="description" content="" />
+  <meta name="keywords" content="" />
+  <link rel="icon" type="image/x-icon" href="./favicon.ico">
 
-  </head>
+  <script src="https://cdn.tailwindcss.com"></script>
 
-  <body class="h-full tracking-normal text-sky-500 bg-cover bg-fixed" style="background-image: url('header.png'); background-position-x: center;">
-    <div class="md:h-full flex flex-col">
-      <div class="p-4 md:p-12 lg:p-24 flex-1 h-full md:mt-[-5%] w-full container mx-auto flex flex-col md:flex-row items-center gap-4 md:gap-12 lg:gap-24">
+</head>
 
-        <div class="p-4 w-full flex-1 md:flex flex-col justify-center md:overflow-y-hidden">
-          <h1 class="drop-shadow-2xl my-4 text-3xl md:text-5xl text-white opacity-75 font-bold leading-tight text-center md:text-left">
-            <span class="bg-clip-text text-transparent bg-gradient-to-r from-sky-500 to-blue-600">Aura</span> Wallpaper
-          </h1>
-          <p class="leading-normal text-base md:text-2xl mb-8 text-center md:text-left">
-           Live wallpapers for your Windows desktop & lockscreen
-          </p>
+<body class="h-full tracking-normal text-sky-500 bg-cover bg-fixed"
+  style="background-image: url('header.png'); background-position-x: center;">
+  <div class="md:h-full flex flex-col">
+    <div
+      class="p-4 md:p-12 lg:p-24 flex-1 h-full md:mt-[-5%] w-full container mx-auto flex flex-col md:flex-row items-center gap-4 md:gap-12 lg:gap-24">
 
-          <iframe src="https://store.steampowered.com/widget/2726120" class="w-full" height="190" frameborder="0"></iframe>
-        </div>
+      <div class="p-4 w-full flex-1 md:flex flex-col justify-center md:overflow-y-hidden">
+        <h1
+          class="drop-shadow-2xl my-4 text-3xl md:text-5xl text-white opacity-75 font-bold leading-tight text-center md:text-left">
+          <span class="bg-clip-text text-transparent bg-gradient-to-r from-sky-500 to-blue-600">Aura</span> Wallpaper
+        </h1>
+        <p class="leading-normal text-base md:text-2xl mb-8 text-center md:text-left">
+          Live wallpapers for your Windows desktop & lockscreen
+        </p>
 
-        <div class="p-4 w-full flex-1">
-          <video id="screen" style="
-          margin:auto;
+        <iframe src="https://store.steampowered.com/widget/2726120" class="w-full" height="190"
+          frameborder="0"></iframe>
+      </div>
+
+      <style>
+        :root {
+          --screen-color: #16191d;
+        }
+
+        .screen-display {
+          margin: auto;
           width: 100%;
-          border: 12px solid #1a1a1a;
+          border: 12px solid var(--screen-color);
           border-radius: 22px;
-          box-shadow: 0 0 8px #1a1a1a;
-          background: #1a1a1a;
-          " autoplay muted src="https://cdn.akamai.steamstatic.com/steam/apps/257008189/movie480_vp9.webm"></video>
-          <div class="case" style="
+          box-shadow: 0 0 8px var(--screen-color), 0 0 8px rgba(0, 110, 255, 0.37);
+          background: var(--screen-color);
+        }
+
+        .screen-stand {
           width: 7%;
           height: 40px;
-          background: #1a1a1a;
-          margin:auto;
-          box-shadow: 0 0 8px #1a1a1a;
-          "></div>
-          <div class="case" style="
+          background: var(--screen-color);
+          margin: auto;
+          box-shadow: 0 0 8px var(--screen-color);
+        }
+
+        .screen-desk {
           width: 30%;
           height: 15px;
-          background: #1a1a1a;
+          background: var(--screen-color);
           border-radius: 10px;
-          margin:auto;
-          box-shadow: 0 0 8px #1a1a1a;
-          "></div>
-        </div>
-      </div>
+          margin: auto;
+          box-shadow: 0 0 8px var(--screen-color);
+        }
+      </style>
 
-      <div class="p-4 md:px-12 lg:px-24 container mx-auto text-sm text-center md:text-left fade-in">
-        <a class="text-gray-500 no-underline hover:no-underline" href="#">&copy; 2024 momo5502 </a>
-        - <a href="mailto:mauriceheumann@gmail.com">Contact</a>
+      <div class="p-4 w-full flex-1">
+        <video id="screen" class="screen-display" autoplay muted
+          src="https://cdn.akamai.steamstatic.com/steam/apps/257008189/movie480_vp9.webm"></video>
+        <div class="screen-stand"></div>
+        <div class="screen-desk"></div>
       </div>
-
     </div>
 
-    <script>
-      const shuffleArray = array => {
-        for (let i = array.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          const temp = array[i];
-          array[i] = array[j];
-          array[j] = temp;
-        }
+    <div class="p-4 md:px-12 lg:px-24 container mx-auto text-sm text-center md:text-left fade-in">
+      <a class="text-gray-500 no-underline hover:no-underline" href="#">&copy; 2024 momo5502 </a>
+      - <a href="mailto:mauriceheumann@gmail.com">Contact</a>
+    </div>
+
+  </div>
+
+  <script>
+    const shuffleArray = array => {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        const temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+      }
+    }
+
+    const videos = [
+      "https://cdn.akamai.steamstatic.com/steam/apps/257008189/movie480_vp9.webm",
+      "https://cdn.akamai.steamstatic.com/steam/apps/257008187/movie480_vp9.webm",
+      "https://cdn.akamai.steamstatic.com/steam/apps/257008191/movie480_vp9.webm",
+      "https://cdn.akamai.steamstatic.com/steam/apps/257008190/movie480_vp9.webm",
+      "https://cdn.akamai.steamstatic.com/steam/apps/257008192/movie480_vp9.webm",
+    ];
+
+    shuffleArray(videos);
+
+    const screen = document.getElementById("screen");
+
+    async function preloadVideo(src) {
+      var newVideo = document.getElementById("preload-container");
+      if (!newVideo) {
+        newVideo = document.createElement("video");
+        document.body.appendChild(newVideo);
       }
 
-      const videos = [
-        "https://cdn.akamai.steamstatic.com/steam/apps/257008189/movie480_vp9.webm",
-        "https://cdn.akamai.steamstatic.com/steam/apps/257008187/movie480_vp9.webm",
-        "https://cdn.akamai.steamstatic.com/steam/apps/257008191/movie480_vp9.webm",
-        "https://cdn.akamai.steamstatic.com/steam/apps/257008190/movie480_vp9.webm",
-        "https://cdn.akamai.steamstatic.com/steam/apps/257008192/movie480_vp9.webm",
-      ];
+      newVideo.muted = true;
+      newVideo.autoplay = true;
+      newVideo.style.position = "fixed";
+      newVideo.style.top = "101%";
+      newVideo.style.width = "1px";
+      newVideo.style.height = "1px";
+      newVideo.style.opacity = "0.01";
+      newVideo.style.pointerEvents = "none";
+      newVideo.style.userSelect = "none";
 
-      shuffleArray(videos);
+      newVideo.src = src;
+    }
 
-      const screen = document.getElementById("screen");
+    function playNextVideo() {
+      const currentIndex = videos.indexOf(screen.src);
+      const newIndex = (currentIndex + 1) % videos.length;
+      const nextIndex = (newIndex + 1) % videos.length;
+      screen.src = videos[newIndex];
 
-      async function preloadVideo(src) {
-        var newVideo = document.getElementById("preload-container");
-        if (!newVideo) {
-          newVideo = document.createElement("video");
-          document.body.appendChild(newVideo);
-        }
+      const origRatio = screen.style.aspectRatio;
+      screen.style.aspectRatio = "16 / 9.3";
 
-        newVideo.muted = true;
-        newVideo.autoplay = true;
-        newVideo.style.position = "fixed";
-        newVideo.style.top = "101%";
-        newVideo.style.width = "1px";
-        newVideo.style.height = "1px";
-        newVideo.style.opacity = "0.01";
-        newVideo.style.pointerEvents = "none";
-        newVideo.style.userSelect = "none";
+      setTimeout(() => {
+        screen.style.aspectRatio = origRatio;
+      }, 50);
 
-        newVideo.src = src;
-      }
+      preloadVideo(videos[nextIndex]);
+    }
 
-      function playNextVideo() {
-        const currentIndex = videos.indexOf(screen.src);
-        const newIndex = (currentIndex + 1) % videos.length;
-        const nextIndex = (newIndex + 1) % videos.length;
-        screen.src = videos[newIndex];
+    screen.onended = playNextVideo;
+    screen.src = videos[0];
 
-        const origRatio = screen.style.aspectRatio;
-        screen.style.aspectRatio = "16 / 9.3";
+    playNextVideo();
+  </script>
+</body>
 
-        setTimeout(() => {
-          screen.style.aspectRatio = origRatio;
-        }, 50);
-
-        preloadVideo(videos[nextIndex]);
-      }
-      
-      screen.onended = playNextVideo;
-      screen.src = videos[0];
-
-      playNextVideo();
-    </script>
-  </body>
 </html>
