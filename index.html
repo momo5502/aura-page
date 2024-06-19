@@ -15,9 +15,9 @@
   <meta property="og:url" content="https://aura.li/" />
   <meta property="og:image" content="https://aura.li/cover.png" />
 
-  <meta name="twitter:card" content="summary"/>
-  <meta name="twitter:title" content="Aura"/>
-  <meta name="twitter:description" content="Animated wallpapers for your Windows desktop & lockscreen."/>
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Aura" />
+  <meta name="twitter:description" content="Animated wallpapers for your Windows desktop & lockscreen." />
   <meta name="twitter:image" content="https://aura.li/cover.png" />
 
   <link rel="icon" type="image/x-icon" href="./favicon.ico">
@@ -48,15 +48,43 @@
       <style>
         :root {
           --screen-color: #16191d;
+          --screen-border: 12px;
         }
 
         .screen-display {
           margin: auto;
           width: 100%;
-          border: 12px solid var(--screen-color);
           border-radius: 22px;
+          padding: var(--screen-border);
           box-shadow: 0 0 8px var(--screen-color), 0 0 8px rgba(0, 110, 255, 0.37);
           background: var(--screen-color);
+        }
+
+        .screen-display>.screen-border {
+          position: relative;
+        }
+
+        .screen-display>.screen-border,
+        .screen-display>.screen-border>* {
+          background: var(--screen-color);
+          border-radius: 10px;
+        }
+
+        .screen-display>.screen-border>* {
+          width: 100%;
+          aspect-ratio: 16/9;
+          transition: opacity 0.4s ease-in;
+          opacity: 1;
+        }
+
+        .screen-display>.screen-border>.off {
+          opacity: 0;
+        }
+
+        .screen-display>.screen-border>.front-detached {
+          top: 0;
+          left: 0;
+          position: absolute;
         }
 
         .screen-stand {
@@ -78,8 +106,12 @@
       </style>
 
       <div class="p-4 w-full flex-1">
-        <video id="screen" class="screen-display" autoplay muted
-          src="https://cdn.akamai.steamstatic.com/steam/apps/257008189/movie480_vp9.webm"></video>
+        <div class="screen-display">
+          <div class="screen-border">
+            <video id="screen" muted></video>
+            <video id="other-screen" class="front-detached off" muted></video>
+          </div>
+        </div>
         <div class="screen-stand"></div>
         <div class="screen-desk"></div>
       </div>
@@ -116,48 +148,78 @@
 
     shuffleArray(videos);
 
-    const screen = document.getElementById("screen");
+    const frontScreen = document.getElementById("other-screen");
 
-    async function preloadVideo(src) {
-      var newVideo = document.getElementById("preload-container");
-      if (!newVideo) {
-        newVideo = document.createElement("video");
-        document.body.appendChild(newVideo);
+    const screen = {
+      video: document.getElementById("screen"),
+      otherVideo: frontScreen,
+      almostFinished: Promise.resolve(),
+      loaded: Promise.resolve(),
+      loadResolver: () => { },
+    };
+
+    async function scheduleVideo(src) {
+      screen.loaded = new Promise((resolve) => {
+        screen.loadResolver = resolve;
+      });
+
+      screen.otherVideo.src = src;
+
+      playVideo();
+    }
+
+    function playVideo() {
+      console.log("play")
+      Promise.all([screen.almostFinished, screen.loaded]).then(displayVideo);
+    }
+
+    function scheduleNextVideo() {
+      console.log("scheduling...");
+      const currentIndex = videos.indexOf(screen.video.src);
+      const newIndex = (currentIndex + 1) % videos.length;
+
+      scheduleVideo(videos[newIndex]);
+    }
+
+    function displayVideo() {
+      console.log("displaying video");
+      const currentScreen = screen.video;
+      const newScreen = screen.otherVideo;
+
+      screen.video = newScreen;
+      screen.otherVideo = currentScreen;
+
+      screen.video.play();
+
+      screen.almostFinished = new Promise(resolve => {
+        setTimeout(() => {
+          console.log("Almost finished!");
+          resolve();
+        }, screen.video.duration * 1000 - 500);
+      });
+
+        if (screen.video == frontScreen) {
+          frontScreen.classList.remove("off");
+        } else {
+          frontScreen.classList.add("off");
+        }
+
+        setTimeout(scheduleNextVideo, 1000);
+    }
+
+    function onVideoLoaded() {
+      if (this != screen.otherVideo) {
+        return;
       }
 
-      newVideo.muted = true;
-      newVideo.autoplay = true;
-      newVideo.style.position = "fixed";
-      newVideo.style.top = "101%";
-      newVideo.style.width = "1px";
-      newVideo.style.height = "1px";
-      newVideo.style.opacity = "0.01";
-      newVideo.style.pointerEvents = "none";
-      newVideo.style.userSelect = "none";
-
-      newVideo.src = src;
+      console.log("load finished!");
+      screen.loadResolver();
     }
 
-    function playNextVideo() {
-      const currentIndex = videos.indexOf(screen.src);
-      const newIndex = (currentIndex + 1) % videos.length;
-      const nextIndex = (newIndex + 1) % videos.length;
-      screen.src = videos[newIndex];
+    screen.video.addEventListener('loadeddata', onVideoLoaded, false);
+    screen.otherVideo.addEventListener('loadeddata', onVideoLoaded, false);
 
-      const origRatio = screen.style.aspectRatio;
-      screen.style.aspectRatio = "16 / 9.3";
-
-      setTimeout(() => {
-        screen.style.aspectRatio = origRatio;
-      }, 50);
-
-      preloadVideo(videos[nextIndex]);
-    }
-
-    screen.onended = playNextVideo;
-    screen.src = videos[0];
-
-    playNextVideo();
+    scheduleNextVideo();
   </script>
 </body>
 
