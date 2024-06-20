@@ -73,7 +73,7 @@
         .screen-display>.screen-border>* {
           width: 100%;
           aspect-ratio: 16/9;
-          transition: opacity 0.4s ease-in;
+          transition: opacity 0.6s ease-in-out;
           opacity: 1;
         }
 
@@ -195,7 +195,7 @@
         setTimeout(() => {
           console.log("Almost finished!");
           resolve();
-        }, screen.video.duration * 1000 - 500);
+        }, screen.video.duration * 1000 - 600);
       });
 
         if (screen.video == frontScreen) {
