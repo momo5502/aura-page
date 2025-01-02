@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Aura - Animated Windows Wallpapers</title>
+  <meta name="description" content="Animated wallpapers for your Windows desktop & lockscreen" />
+  <meta name="keywords" content="desktop, lockscreen, windows, animated, live-wallaper, wallpaper" />
+
+  <meta property="og:title" content="Aura" />
+  <meta property="og:description" content="Animated wallpapers for your Windows desktop & lockscreen." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://aura.li/" />
+  <meta property="og:image" content="https://aura.li/cover.png" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Aura" />
+  <meta name="twitter:description" content="Animated wallpapers for your Windows desktop & lockscreen." />
+  <meta name="twitter:image" content="https://aura.li/cover.png" />
+
+  <link rel="icon" type="image/x-icon" href="./favicon.ico">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+</head>
+
+<body class="h-full tracking-normal text-sky-500 bg-cover bg-fixed"
+  style="background-image: url('header.png'); background-position-x: center;">
+  <div class="md:h-full flex flex-col">
+    <div
+      class="p-4 md:p-12 lg:p-24 flex-1 h-full md:mt-[-5%] w-full container mx-auto flex flex-col md:flex-row items-center gap-4 md:gap-12 lg:gap-24">
+
+      <div class="p-4 w-full flex-1 md:flex flex-col justify-center md:overflow-y-hidden">
+        <h1
+          class="drop-shadow-2xl my-4 text-3xl md:text-5xl text-white opacity-75 font-bold leading-tight text-center md:text-left">
+          <span class="bg-clip-text text-transparent bg-gradient-to-r from-sky-500 to-blue-600">Aura</span> Wallpaper
+        </h1>
+        <p class="drop-shadow-2xl leading-normal text-base md:text-2xl mb-8 text-center md:text-left">
+          Live wallpapers for your Windows desktop & lockscreen
+        </p>
+
+        <iframe src="https://store.steampowered.com/widget/2726120" class="w-full" height="190"
+          frameborder="0"></iframe>
+      </div>
+
+      <style>
+        :root {
+          --screen-color: #16191d;
+          --screen-border: 12px;
+        }
+
+        .screen-display {
+          margin: auto;
+          width: 100%;
+          border-radius: 22px;
+          padding: var(--screen-border);
+          box-shadow: 0 0 8px var(--screen-color), 0 0 8px rgba(0, 110, 255, 0.37);
+          background: var(--screen-color);
+        }
+
+        .screen-display>.screen-border {
+          position: relative;
+        }
+
+        .screen-display>.screen-border,
+        .screen-display>.screen-border>* {
+          background: var(--screen-color);
+          border-radius: 10px;
+        }
+
+        .screen-display>.screen-border>* {
+          width: 100%;
+          aspect-ratio: 16/9;
+          transition: opacity 0.6s ease-in-out;
+          opacity: 1;
+        }
+
+        .screen-display>.screen-border>.off {
+          opacity: 0;
+        }
+
+        .screen-display>.screen-border>.front-detached {
+          top: 0;
+          left: 0;
+          position: absolute;
+        }
+
+        .screen-stand {
+          width: 7%;
+          height: 40px;
+          background: var(--screen-color);
+          margin: auto;
+          box-shadow: 0 0 8px var(--screen-color);
+        }
+
+        .screen-desk {
+          width: 30%;
+          height: 15px;
+          background: var(--screen-color);
+          border-radius: 10px;
+          margin: auto;
+          box-shadow: 0 0 8px var(--screen-color);
+        }
+      </style>
+
+      <div class="p-4 w-full flex-1">
+        <div class="screen-display">
+          <div class="screen-border">
+            <video id="screen" muted></video>
+            <video id="other-screen" class="front-detached off" muted></video>
+          </div>
+        </div>
+        <div class="screen-stand"></div>
+        <div class="screen-desk"></div>
+      </div>
+    </div>
+
+    <div class="p-4 md:px-12 lg:px-24 container mx-auto text-sm text-center md:text-left fade-in">
+      <a class="text-gray-500 no-underline hover:no-underline" href="#">&copy; 2024 momo5502 </a>
+      - <a href="mailto:mauriceheumann@gmail.com">Contact</a>
+    </div>
+
+  </div>
+
+  <script>
+    const shuffleArray = array => {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        const temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+      }
+    }
+
+    const videos = [
+      "https://cdn.akamai.steamstatic.com/steam/apps/257008189/movie480_vp9.webm",
+      "https://cdn.akamai.steamstatic.com/steam/apps/257008187/movie480_vp9.webm",
+      "https://cdn.akamai.steamstatic.com/steam/apps/257008191/movie480_vp9.webm",
+      "https://cdn.akamai.steamstatic.com/steam/apps/257008190/movie480_vp9.webm",
+      "https://cdn.akamai.steamstatic.com/steam/apps/257008192/movie480_vp9.webm",
+      "https://cdn.akamai.steamstatic.com/steam/apps/257032307/movie480_vp9.webm",
+      "https://cdn.akamai.steamstatic.com/steam/apps/257032308/movie480_vp9.webm",
+      "https://cdn.akamai.steamstatic.com/steam/apps/257032309/movie480_vp9.webm",
+      "https://cdn.akamai.steamstatic.com/steam/apps/257032310/movie480_vp9.webm",
+    ];
+
+    shuffleArray(videos);
+
+    const frontScreen = document.getElementById("other-screen");
+
+    const screen = {
+      video: document.getElementById("screen"),
+      otherVideo: frontScreen,
+      almostFinished: Promise.resolve(),
+      loaded: Promise.resolve(),
+      loadResolver: () => { },
+    };
+
+    async function scheduleVideo(src) {
+      screen.loaded = new Promise((resolve) => {
+        screen.loadResolver = resolve;
+      });
+
+      screen.otherVideo.src = src;
+
+      playVideo();
+    }
+
+    function playVideo() {
+      console.log("play")
+      Promise.all([screen.almostFinished, screen.loaded]).then(displayVideo);
+    }
+
+    function scheduleNextVideo() {
+      console.log("scheduling...");
+      const currentIndex = videos.indexOf(screen.video.src);
+      const newIndex = (currentIndex + 1) % videos.length;
+
+      scheduleVideo(videos[newIndex]);
+    }
+
+    function displayVideo() {
+      console.log("displaying video");
+      const currentScreen = screen.video;
+      const newScreen = screen.otherVideo;
+
+      screen.video = newScreen;
+      screen.otherVideo = currentScreen;
+
+      screen.video.play();
+
+      screen.almostFinished = new Promise(resolve => {
+        setTimeout(() => {
+          console.log("Almost finished!");
+          resolve();
+        }, screen.video.duration * 1000 - 600);
+      });
+
+        if (screen.video == frontScreen) {
+          frontScreen.classList.remove("off");
+        } else {
+          frontScreen.classList.add("off");
+        }
+
+        setTimeout(scheduleNextVideo, 1000);
+    }
+
+    function onVideoLoaded() {
+      if (this != screen.otherVideo) {
+        return;
+      }
+
+      console.log("load finished!");
+      screen.loadResolver();
+    }
+
+    screen.video.addEventListener('loadeddata', onVideoLoaded, false);
+    screen.otherVideo.addEventListener('loadeddata', onVideoLoaded, false);
+
+    scheduleNextVideo();
+  </script>
+</body>
+
+</html>
